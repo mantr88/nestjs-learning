@@ -21,19 +21,20 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
-/// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { CreateProductDto } from './dto/create-product.dto';
+import { Product, ProductDocument } from './schemas/product.schema';
+import { Model } from 'mongoose';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ProductServise } from './products.service';
-export declare class ProductsController {
-    private readonly productService;
-    constructor(productService: ProductServise);
-    getAll(): Promise<import("./schemas/product.schema").Product[]>;
-    getOne(id: string): Promise<import("./schemas/product.schema").Product>;
-    create(createProductDto: CreateProductDto): Promise<import("./schemas/product.schema").Product>;
-    remove(id: string): Promise<import("mongoose").ModifyResult<import("mongoose").Document<unknown, {}, import("./schemas/product.schema").ProductDocument> & import("./schemas/product.schema").Product & import("mongoose").Document<any, any, any> & {
+export declare class ProductServise {
+    private productModel;
+    constructor(productModel: Model<ProductDocument>);
+    private products;
+    getAll(): Promise<Product[]>;
+    getById(id: string): Promise<Product>;
+    crate(productDto: CreateProductDto): Promise<Product>;
+    remove(id: string): Promise<import("mongoose").ModifyResult<import("mongoose").Document<unknown, {}, ProductDocument> & Product & import("mongoose").Document<any, any, any> & {
         _id: import("mongoose").Types.ObjectId;
     }>>;
-    update(updateProductDto: UpdateProductDto, id: string): Promise<import("./schemas/product.schema").Product>;
+    update(id: string, productDto: UpdateProductDto): Promise<Product>;
 }

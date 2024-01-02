@@ -16,21 +16,25 @@ exports.ProductsController = void 0;
 const common_1 = require("@nestjs/common");
 const create_product_dto_1 = require("./dto/create-product.dto");
 const update_product_dto_1 = require("./dto/update-product.dto");
+const products_service_1 = require("./products.service");
 let ProductsController = class ProductsController {
+    constructor(productService) {
+        this.productService = productService;
+    }
     getAll() {
-        return 'getAll';
+        return this.productService.getAll();
     }
     getOne(id) {
-        return 'getOne ' + id;
+        return this.productService.getById(id);
     }
     create(createProductDto) {
-        return `Title: ${createProductDto.title} Price: ${createProductDto.price}`;
+        return this.productService.crate(createProductDto);
     }
     remove(id) {
-        return 'Remove ' + id;
+        return this.productService.remove(id);
     }
     update(updateProductDto, id) {
-        return 'Update ' + id;
+        return this.productService.update(id, updateProductDto);
     }
 };
 exports.ProductsController = ProductsController;
@@ -38,14 +42,14 @@ __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "getAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "getOne", null);
 __decorate([
     (0, common_1.Post)(),
@@ -54,7 +58,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "create", null);
 __decorate([
     (0, common_1.Delete)(':id'),
@@ -72,6 +76,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "update", null);
 exports.ProductsController = ProductsController = __decorate([
-    (0, common_1.Controller)('products')
+    (0, common_1.Controller)('products'),
+    __metadata("design:paramtypes", [products_service_1.ProductServise])
 ], ProductsController);
 //# sourceMappingURL=products.controller.js.map
