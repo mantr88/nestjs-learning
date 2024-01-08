@@ -5,7 +5,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument } from './schemas/product.schema';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { xml2json } from 'xml-js';
+// import { xml2json } from 'xml-js';
 import { parseString } from 'xml2js';
 console.log('🚀 ~ file: products.service.ts:9 ~ parseString:', parseString);
 // const parseString = require('xml2js').parseString;
@@ -23,7 +23,7 @@ export class ProductServise {
 
   async getAll() {
     let json = {};
-    const fetchData = await fetch(`${XML_URL}`)
+    await fetch(`${XML_URL}`)
       .then((res) => res.text())
       .then(
         (data) =>
