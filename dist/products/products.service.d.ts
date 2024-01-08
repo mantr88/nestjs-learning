@@ -30,7 +30,7 @@ export declare class ProductServise {
     private productModel;
     constructor(productModel: Model<ProductDocument>);
     private products;
-    getAll(): Promise<Product[]>;
+    getAll(): Promise<{}>;
     getById(id: string): Promise<Product>;
     crate(productDto: CreateProductDto): Promise<Product>;
     remove(id: string): Promise<import("mongoose").ModifyResult<import("mongoose").Document<unknown, {}, ProductDocument> & Product & import("mongoose").Document<any, any, any> & {

@@ -29,7 +29,7 @@ import { ProductServise } from './products.service';
 export declare class ProductsController {
     private readonly productService;
     constructor(productService: ProductServise);
-    getAll(): Promise<import("./schemas/product.schema").Product[]>;
+    getAll(): Promise<{}>;
     getOne(id: string): Promise<import("./schemas/product.schema").Product>;
     create(createProductDto: CreateProductDto): Promise<import("./schemas/product.schema").Product>;
     remove(id: string): Promise<import("mongoose").ModifyResult<import("mongoose").Document<unknown, {}, import("./schemas/product.schema").ProductDocument> & import("./schemas/product.schema").Product & import("mongoose").Document<any, any, any> & {

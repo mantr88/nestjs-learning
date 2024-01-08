@@ -17,13 +17,25 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const product_schema_1 = require("./schemas/product.schema");
 const mongoose_2 = require("mongoose");
+const xml2js_1 = require("xml2js");
+console.log('🚀 ~ file: products.service.ts:9 ~ parseString:', xml2js_1.parseString);
 let ProductServise = class ProductServise {
     constructor(productModel) {
         this.productModel = productModel;
         this.products = [];
     }
     async getAll() {
-        return this.productModel.find().exec();
+        let json = {};
+        const fetchData = await fetch('https://ebk.salesdrive.me/export/yml/export.yml?publicKey=JAvWTZJQXYHA15-Adae5O-JRlHOuDA97l1SBWVXpy_Okn3WEsPjQKZmcbiOGYCfWYNC6_M42GBn5')
+            .then((res) => res.text())
+            .then((data) => (json = (0, xml2js_1.parseString)(data, (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            console.log('🚀 ~ file: products.service.ts:33 ~ ProductServise ~ result:', result);
+            return result;
+        })));
+        return json;
     }
     async getById(id) {
         return this.productModel.findById(id);
