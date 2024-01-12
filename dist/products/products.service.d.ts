@@ -22,15 +22,16 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
+import { Model } from 'mongoose';
+import 'dotenv/config';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product, ProductDocument } from './schemas/product.schema';
-import { Model } from 'mongoose';
 import { UpdateProductDto } from './dto/update-product.dto';
 export declare class ProductServise {
     private productModel;
     constructor(productModel: Model<ProductDocument>);
     private products;
-    getAll(): Promise<{}>;
+    getAll(): Promise<any>;
     getById(id: string): Promise<Product>;
     crate(productDto: CreateProductDto): Promise<Product>;
     remove(id: string): Promise<import("mongoose").ModifyResult<import("mongoose").Document<unknown, {}, ProductDocument> & Product & import("mongoose").Document<any, any, any> & {

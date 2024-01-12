@@ -14,27 +14,22 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductServise = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_1 = require("mongoose");
+require("dotenv/config");
+const mongoose_2 = require("@nestjs/mongoose");
 const product_schema_1 = require("./schemas/product.schema");
-const mongoose_2 = require("mongoose");
-const xml2js_1 = require("xml2js");
-console.log('🚀 ~ file: products.service.ts:9 ~ parseString:', xml2js_1.parseString);
+const xml2js = require("xml2js");
+const XML_URL = process.env.XML_URL;
+console.log('🪲 ~ XML_URL:', XML_URL);
 let ProductServise = class ProductServise {
     constructor(productModel) {
         this.productModel = productModel;
         this.products = [];
     }
     async getAll() {
-        let json = {};
-        const fetchData = await fetch('https://ebk.salesdrive.me/export/yml/export.yml?publicKey=JAvWTZJQXYHA15-Adae5O-JRlHOuDA97l1SBWVXpy_Okn3WEsPjQKZmcbiOGYCfWYNC6_M42GBn5')
-            .then((res) => res.text())
-            .then((data) => (json = (0, xml2js_1.parseString)(data, (err, result) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log('🚀 ~ file: products.service.ts:33 ~ ProductServise ~ result:', result);
-            return result;
-        })));
+        let json = null;
+        const xmlData = await fetch(`${XML_URL}`).then((res) => res.text());
+        json = await xml2js.parseStringPromise(xmlData);
         return json;
     }
     async getById(id) {
@@ -54,7 +49,7 @@ let ProductServise = class ProductServise {
 exports.ProductServise = ProductServise;
 exports.ProductServise = ProductServise = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(product_schema_1.Product.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(0, (0, mongoose_2.InjectModel)(product_schema_1.Product.name)),
+    __metadata("design:paramtypes", [mongoose_1.Model])
 ], ProductServise);
 //# sourceMappingURL=products.service.js.map

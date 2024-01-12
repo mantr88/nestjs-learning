@@ -1,17 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import { CreateProductDto } from './dto/create-product.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument } from './schemas/product.schema';
 import { UpdateProductDto } from './dto/update-product.dto';
-// import { xml2json } from 'xml-js';
-import { parseString } from 'xml2js';
-console.log('🚀 ~ file: products.service.ts:9 ~ parseString:', parseString);
-// const parseString = require('xml2js').parseString;
-dotenv.config();
+import * as xml2js from 'xml2js';
 
 const XML_URL = process.env.XML_URL;
+console.log('🪲 ~ XML_URL:', XML_URL);
 
 @Injectable()
 export class ProductServise {
@@ -22,22 +19,9 @@ export class ProductServise {
   private products = [];
 
   async getAll() {
-    let json = {};
-    await fetch(`${XML_URL}`)
-      .then((res) => res.text())
-      .then(
-        (data) =>
-          (json = parseString(data, (err, result) => {
-            if (err) {
-              console.log(err);
-            }
-            console.log(
-              '🚀 ~ file: products.service.ts:33 ~ ProductServise ~ result:',
-              result,
-            );
-            return result;
-          })),
-      );
+    let json = null;
+    const xmlData = await fetch(`${XML_URL}`).then((res) => res.text());
+    json = await xml2js.parseStringPromise(xmlData);
     return json;
   }
 
